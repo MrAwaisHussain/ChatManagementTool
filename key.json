@@ -1,0 +1,11 @@
+{
+    // Twitter Configuration
+    "apikey":"",
+    "apisecretkey":"",
+    "accesstoken":"",
+    "accesstokensecret":"",
+    // Discord Configuration
+    "discordtoken":"",
+    // Twitch Configuration
+    "twitchtoken":""
+}

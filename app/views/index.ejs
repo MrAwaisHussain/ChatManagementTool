@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>NotCreative API - Dashboard</title>
+  </head>
+  <body>
+    <!-- Nav Bar -->
+    <%-   include('preload/navbar.ejs') %>
+
+    <!-- Bot information & Channel information -->
+
+    <br>
+
+    <div class="col-auto">
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Logged In As: </div>
+        </div>
+        <input type="text" class="form-control" name="LoggedInAs"  placeholder=<%= botname %> disabled>
+      </div>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">Monitoring Channel: </div>
+        </div>
+        <input type="text" class="form-control" name="MonitoringChannel" placeholder=<%= streamername %> disabled>
+      </div>
+    </div>
+
+    <!-- Navigation Quick Buttons -->
+
+    <br>
+
+    <div align="center">
+      <a href="/quotes"><button type="button" class="btn btn-primary">Quotes</button></a>
+      <a href="/commands"><button type="button" class="btn btn-primary">Commands</button></a>
+      <a href="/filter"><button type="button" class="btn btn-primary">Filter</button></a>
+    </div>
+
+    <br> 
+
+
+    
+    <% if (alreadyLive) { %>
+      <div class="alert alert-success" role="alert" align="center">
+        Live Status: Currently Live!
+      </div>
+    <% } else { %>
+      <div class="alert alert-danger" role="alert" align="center">
+        Live Status: Offline!
+      </div>
+    <% } %>
+
+    <div align="center">
+      <form method="POST" action="/toggleStatus">
+        <label>If it's already live, the alert will not be posted</label><br>
+        <button type="submit" class="btn btn-danger" align="center">Reset Live Status (Toggle)</button>
+      </form>
+    </div>
+    
+    <br>
+
+    <!-- Currently live -->
+
+    <div class="alert alert-primary" role="alert" align="center">
+        Simply type a twitter post and click "Tweet"!
+      </div>
+
+    <form method="POST" action="/postTweet">
+        <div class="col-auto">
+            <div class="input-group mb-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text">Post a tweet</div>
+              </div>
+              <input type="text" class="form-control" name="tweetMessage" placeholder="Message">
+            </div>
+          </div>
+          <div class="col-auto" align="center">
+            <button type="submit" class="btn btn-primary mb-2">Tweet</button>
+        </div>
+    </form>
+    
+
+  
+
+    <!-- Scripts Below -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

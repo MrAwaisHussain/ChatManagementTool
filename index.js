@@ -269,7 +269,7 @@ async function actualnotif(streamtitle, streamgame){
             const twitchEmbed = {
                 author: {
                     name: '', // Embed Name
-                    icon_url: 'https://i.imgur.com/3iQ839z.png' // Embed Thumbnail
+                    icon_url: '' // Embed Thumbnail
                 },
                 title: `${streamtitle}`,
                 description: `Playing: ${streamgame}`,
@@ -291,18 +291,15 @@ async function actualnotif(streamtitle, streamgame){
         if ((isLive !== false) && (isAlreadyLive !== true)) {
             isAlreadyLive = true;
             await channel.send({ embed: twitchEmbed});
-            await channel.send('<@&512435641632555029>'); // Notification Role Mention
+            await channel.send('<@&ROLENUMBER>'); // Notification Role Mention
         }
 }
 
 DClient.on('presenceUpdate', async (oldMember, newMember) => { //Checks for status updates.
-    //console.log(newMember.activities);
     if ((newMember.userID == streamerID) && (newMember.activities.find(activity => activity.type === 'STREAMING'))) {
-        // console.log("IS USER & IS STREAMING");
     // -----------------------------------------------------------------------------------------------------------------------------
         title = newMember.activities.find(activity => activity.type === 'STREAMING').details;
         game = newMember.activities.find(activity => activity.type === 'STREAMING').state;
-        // console.log("[NAME]: " + newMember.activities.find(activity => activity.type === 'STREAMING').name + "\n[TYPE]: " + newMember.activities.find(activity => activity.type === 'STREAMING').type + "\n[DETAIL(S)]: " + title + "\n[STATE(S)]: " + game + "\n[URL]: " + newMember.activities.find(activity => activity.type === 'STREAMING').url);
     // ----------------------------------------------------------------------------------------------------------------------------- 
         isLive = true;
         currentGame = game;
@@ -469,7 +466,10 @@ function getCommandsFromDB(){
             connection.release()                
         })
     })
+    return "BOT STATUS: Loaded Commands From Database";
 }
+
+exports.getCommandsFromDB = getCommandsFromDB();
 
 function getToggled(){
     if (isAlreadyLive == true) {
@@ -480,7 +480,10 @@ function getToggled(){
         isAlreadyLive = true;
         hasAnnounced = true;
     }
+    return "Status Toggled";
 }
+
+exports.getToggled = getToggled();
 
 function getQuotesFromDB(){
     pool.getConnection(function(err, connection){
@@ -497,7 +500,10 @@ function getQuotesFromDB(){
     })
     // console.log(localQuotes)
     // console.log(quotes);
+    return quotes;
 }
+
+exports.getQuotesFromDB = getQuotesFromDB();
 
 function getFilterFromDB(){
     customfilter = []
@@ -514,7 +520,10 @@ function getFilterFromDB(){
             connection.release()                
         })
     })
+    return customfilter;
 }
+
+exports.getFilterFromDB = getFilterFromDB();
 
 function addToFilter(word2filter){
     var keyword = word2filter.toLowerCase();
@@ -526,6 +535,7 @@ function addToFilter(word2filter){
                 });
                 getFilterFromDB();
             })
+    return "Confirmed";
 }
 
 function deleteFromFilter(word2filter){
@@ -538,7 +548,11 @@ function deleteFromFilter(word2filter){
                 });
                 getFilterFromDB();
             });
+    return "Confirmed";
 }
+
+exports.addToFilter = addToFilter("test");
+exports.deleteFromFilter = deleteFromFilter("test");
 
 function LinkProtectionRemoval(context) {
     client.deletemessage(twitchchannel, context.id)
@@ -592,7 +606,6 @@ function onMessageHandler (target, context, msg, self) {
         .then((data) => {
             client.say(twitchchannel, ("Oh no! You said a naughty word"));
         }).catch((err) => {
-            //
         });
         }
     }
@@ -630,9 +643,6 @@ function onMessageHandler (target, context, msg, self) {
         const result = `you said: ${args.join(' ')}`;
         console.log(result);
         client.say(twitchchannel, result);
-    }
-    if (commandName === 'butt') {
-        client.action(twitchchannel, (`@${context.username} no u`))
     }
     if (commandName === 'ping') {
         client.ping()
